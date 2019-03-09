@@ -5,7 +5,7 @@ import { ApolloServer } from 'apollo-server-express'
 
 import schema from './schema'
 import resolvers from './resolvers'
-import models from './models'
+import models, { sequelize } from './models'
 
 config()
 const app = express()
@@ -24,7 +24,8 @@ server.applyMiddleware({
   app,
   path: '/graphql'
 })
-
-app.listen({
-  port: process.env.PORT
-}, () => console.log(`Apollo server running at http://localhost:${process.env.PORT}`))
+sequelize.sync().then(() => {
+  app.listen({
+    port: process.env.PORT
+  }, () => console.log(`Apollo server running at http://localhost:${process.env.PORT}`))
+})
