@@ -24,8 +24,48 @@ server.applyMiddleware({
   app,
   path: '/graphql'
 })
-sequelize.sync().then(() => {
+
+const eraseDatabaseOnSync = true
+
+sequelize.sync({
+  force: eraseDatabaseOnSync
+}).then(async () => {
+  if (eraseDatabaseOnSync) {
+    createUsersWithMessages()
+  }
   app.listen({
     port: process.env.PORT
   }, () => console.log(`Apollo server running at http://localhost:${process.env.PORT}`))
 })
+
+const createUsersWithMessages = async () => {
+  await models.User.create(
+    {
+      username: 'buoyantair',
+      messages: [
+        {
+          text: 'Hello world!'
+        }
+      ]
+    },
+    {
+      include: [models.Message]
+    })
+
+  await models.User.create(
+    {
+      username: 'Vasili',
+      messages: [
+        {
+          text: 'Alice in the wonderland'
+        },
+        {
+          text: 'Rorororor'
+        }
+      ]
+    },
+    {
+      include: [models.Message]
+    }
+  )
+}
