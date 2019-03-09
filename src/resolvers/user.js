@@ -1,13 +1,17 @@
 export default {
   Query: {
-    me: (parent, args, { me }) => me,
-    user: (parent, { id }, { models }) => models.users[id],
-    users: (parent, args, { models }) => Object.values(models.users)
+    me: async (parent, args, { models, me }) => models.User.findById(me.id),
+    user: async (parent, { id }, { models }) => models.User.findById(id),
+    users: async (parent, args, { models }) => models.User.findAll()
   },
   Mutation: {
 
   },
   User: {
-    messages: (user, args, { models }) => Object.values(models.messages).filter(m => m.userId === user.id)
+    messages: async (user, args, { models }) => models.User.findAll({
+      where: {
+        userId: user.id
+      }
+    })
   }
 }

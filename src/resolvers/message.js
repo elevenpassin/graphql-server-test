@@ -1,48 +1,29 @@
-import uuid4 from 'uuid/v4'
 
 export default {
   Query: {
-    message: (parent, { id }, { models }) => models.messages[id],
-    messages: (parent, args, { models }) => Object.values(models.messages)
+    message: async (parent, { id }, { models }) => models.Message.findById(id),
+    messages: async (parent, args, { models }) => models.Message.findAll()
   },
   Mutation: {
-    createMessage: (parent, { text }, { me, models }) => {
-      const id = uuid4()
-      const message = {
-        text,
-        userId: me.id,
+    createMessage: async (parent, { text }, { me, models }) => models.Message.create({
+      text,
+      userId: me.id
+    }),
+    deleteMessage: async (parent, { id }, { models }) => models.Message.destroy({
+      where: {
         id
       }
-      models.messages[id] = message
-      models.users[me.id].messageIds.push(id)
-      return message
-    },
-    deleteMessage: (parent, { id }, { models }) => {
-      const { [id]: message, ...otherMessages } = models.messages
-
-      if (!message) {
-        return false
+    }),
+    updateMessage: async (parent, { id, text }, { models }) => models.Message.update({
+      where: {
+        id
+      },
+      fields: {
+        text
       }
-
-      models.messages = otherMessages
-      return true
-    },
-    updateMessage: (parent, { id, text }, { models }) => {
-      const { [id]: message, ...otherMessages } = models.messages
-      if (!message) {
-        return null
-      }
-
-      message.text = text
-      models.messages = {
-        [id]: message,
-        ...otherMessages
-      }
-
-      return message
-    }
+    })
   },
   Message: {
-    user: ({ userId }, args, { models }) => models.users[userId]
+    user: async ({ userId }, args, { models }) => models.User.findById(userId)
   }
 }
