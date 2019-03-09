@@ -1,23 +1,17 @@
-# Simple Node Server with Babel
+# Graphql server
 
-[![Build Status](https://travis-ci.org/rwieruch/node-babel-server.svg?branch=master)](https://travis-ci.org/rwieruch/node-babel-server) [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/rwieruch/node-babel-server.svg)](https://greenkeeper.io/)
-
-An easy way to get started with JavaScript on the command line. [Read more about it](https://www.robinwieruch.de/minimal-node-js-babel-setup).
-
-## Features
-
-* Babel 7
-* Environment Variables
+Hi, this is my attempt at building a sane server using Graphql.
+I'm mostly following through the tutorial series created by [robinwieruch.de](https://www.robinwieruch.de/)
 
 ## Requirements
 
-* [node & npm](https://nodejs.org/en/)
-* [git](https://www.robinwieruch.de/git-essential-commands/)
+* [Node & NPM](https://nodejs.org/en/)
+
+* [Git](https://git-scm.com/)
 
 ## Installation
 
-* `git clone git@github.com:rwieruch/node-babel-server.git`
-* `cd node-babel-server`
+* `git clone git@github.com:buoyantair/graphql-test-server.git`
+* `cd graphql-test-server`
 * `npm install`
 * `npm start`
-* optional: include *.env* in your *.gitignore*
